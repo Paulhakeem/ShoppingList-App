@@ -2,10 +2,12 @@
 import { ref } from "vue"
 import { RouterLink, useRouter} from 'vue-router'
 import { auth } from '../firebaseConfig'
-import {getAuth, signInWithEmailAndPassword} from "firebase/auth"
+import {getAuth, signInWithEmailAndPassword, GoogleAuthProvider, FacebookAuthProvider, signInWithPopup} from "firebase/auth"
 
   
  const router = useRouter()
+ const provider = new GoogleAuthProvider()
+ const facebook = new FacebookAuthProvider()
   
   const formDetails = ref({
     email: '',
@@ -27,12 +29,37 @@ import {getAuth, signInWithEmailAndPassword} from "firebase/auth"
       alert(err.message)
     })
   }
+
+  const googleLogin = () => {
+    signInWithPopup(getAuth(), provider)
+     .then(() => {
+       router.push({
+         path: '/shopping'
+       })
+     })
+    .catch(err => {
+      alert(err.message)
+    })
+  }
+
+  const facebookLogin = () => {
+      signInWithPopup(getAuth(), facebook)
+     .then(() => {
+       router.push({
+        path: '/shopping'
+       })
+     })
+    .catch(err => {
+      alert(err.message)
+    })
+  }
+  
   
 
 </script>
 <template>
-  <section class="items-center justify-center  max-auto max-w-xl my-16 p-3">
-    <div class="text-center">
+  <section class="mx-auto max-w-md rounded-lg place-items-center justify-center grid my-12 bg-gray-200 box-shadow-white shadow-2xl" >
+    <div class="text-center ">
       <h1 class="text-xl sm:text-2xl text-bold text-center">
       Login to your account
       </h1>
@@ -42,8 +69,8 @@ import {getAuth, signInWithEmailAndPassword} from "firebase/auth"
       </RouterLink>
       </p>
     </div>
-    <form @submit.prevent="loginUser"  class="max-auto max-w-sm p-3 justify-center items-center" >
-      <div class="space-y-2 my-2">
+    <form @submit.prevent="loginUser"  class="max-auto max-w-sm p-3 border border-t-2 border border-t-blue-500" >
+      <div class="space-y-2 my-2 flex flex-col justify-center"  >
         <label class="block">Email</label>
         <input v-model="formDetails.email" type="email" class="w-full focus:outline-none p-2 border brder-gray-400 rounded-md focus:ring-1 focus:border-0">
       </div>
@@ -52,8 +79,21 @@ import {getAuth, signInWithEmailAndPassword} from "firebase/auth"
        <input v-model="formDetails.password" type="password" class="w-full focus:outline-none p-2 border brder-gray-400 rounded-md focus:ring-1 focus:border-0">
     </div>
 
-      <button class="w-full bg-blue-500 text-white px-3 py-2 rounded-md my-4">Login</button>
-      <div class="flex items-center justify-center space-x-2 my-4">
+      <button class="w-full bg-blue-500 text-white px-3 py-2 rounded-md my-4 justify-center items-center content-center">Login</button>
+       <div class="flex items-center justify-center space-x-2 my-4">
+      <div class="w-full h-[2px] bg-gray-300"></div>
+        <p class="shrink-0">Or login with</p>
+      <div class="w-full h-[2px] bg-gray-300 "></div>
+      </div>
+      <div class="flex items-center justify-evenly gap-2 " >
+        <div @click="googleLogin" class="flex items-center space-x-2 border border-gray-300 p-3 sm:p-3 rounded-md justify-center cursor-pointer">
+          <font-awesome-icon icon="fa-brands fa-google" />
+          <p>Google</p>
+        </div>
+                <div @click="facebookLogin" class="flex items-center space-x-2 border border-gray-300 p-3 rounded-md justify-center cursor-pointer">
+                  <font-awesome-icon icon="fa-brands fa-facebook" />
+          <p>Facebook</p>
+        </div>
       </div>
     </form>
   </section>
