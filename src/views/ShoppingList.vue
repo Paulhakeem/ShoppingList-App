@@ -1,5 +1,5 @@
  <script setup>
-  import { ref, watch, onMounted } from "vue"
+import { ref, watch, onMounted } from "vue"
 
 const items = ref([])
    
@@ -51,7 +51,7 @@ watch(items, newItem => {
     <li 
       v-for="({id, label}, index) in items" 
       :key="id" 
-      class="p-2 font-base m-auto border border-4 bg-white text-xl divide-y-2">
+      class="p-2 font-base m-auto border border-4 bg-white text-xl divide-y-2 place-items-start">
        <font-awesome-icon icon="fa-regular fa-circle-check" class="mr-2 text-blue-500" />
       {{label}}
       <button @click="removeItem"><font-awesome-icon icon="fa-solid fa-circle-xmark" class="text-blue-500"/></button>
