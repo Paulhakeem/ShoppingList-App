@@ -3,9 +3,6 @@ import './style.css'
 import { createRouter, createWebHistory } from 'vue-router'
 import App from './App.vue'
 import Home from './views/HelloWorld.vue'
-import LoginList from './views/LoginList.vue'
-import SignupList from './views/SignupList.vue'
-import ShoppingList from './views/ShoppingList.vue'
 import { auth} from "./firebaseConfig"
 
 
@@ -24,9 +21,13 @@ const router = createRouter({
     history: createWebHistory(),
     routes: [
         {path: '/', name: 'Home', component: Home},
-      {path: '/login', name: 'LoginList', component: () => LoginList},
-      {path: '/signup', name: 'SignupList', component: () => SignupList},
-      {path: '/shopping', name: 'ShoppingList', component: () => ShoppingList, meta: {requiresAuth: true}}
+      {path: '/login', name: 'LoginList', component: () => 
+      import ('./views/LoginList.vue')},
+      {path: '/signup', name: 'SignupList', component: () =>
+      import ('./views/SignupList.vue')},
+      {path: '/shopping', name: 'ShoppingList', component: () => 
+      import ('./views/ShoppingList.vue'),
+      meta: {requiresAuth: true}}
     ]
 })
 

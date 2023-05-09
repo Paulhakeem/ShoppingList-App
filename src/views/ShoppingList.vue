@@ -1,6 +1,7 @@
  <script setup>
 import { ref, watch, onMounted } from "vue"
-
+import { onBeforeRouteLeave } from 'vue-router'
+   
 const items = ref([])
    
 const newItem = ref("")
@@ -29,6 +30,13 @@ watch(items, newItem => {
     items.value = JSON.parse(localStorage.getItem('items')) || []
   })
 
+   onBeforeRouteLeave((to, from) => {
+      const answer = window.confirm(
+        'Do you really want to leave? confirm your list again!'
+      )
+    
+      if (!answer) return false
+    })
    
 </script>
 
