@@ -1,6 +1,6 @@
  <script setup>
 import { ref, watch, onMounted } from "vue"
-import { onBeforeRouteLeave } from 'vue-router'
+import { useRoute, onBeforeRouteLeave } from 'vue-router'
    
 const items = ref([])
    
@@ -37,13 +37,24 @@ watch(items, newItem => {
     
       if (!answer) return false
     })
+
    
 </script>
 
 <template>
   <div class="mx-auto max-w-md rounded-lg place-items-center justify-center grid my-12 bg-gray-200 pb-6">
     
- <img class="w-full pt-6" src="../assets/shopping-1.png">
+    <div class="float-left">
+      <RouterLink :to="{name: 'Home'}">
+    <button
+    class="bg-blue-500 text-white rounded-lg p-2 uppercase mt-4" @click="goBack">
+      Go back
+    </button>
+      </RouterLink>
+    </div>
+    
+ <img class="w-full pt-6" 
+  src="../assets/shopping-1.png">
     
   <div class=" text-center justify-center p-4 mt-20 ">
     <h1 class="text-2xl font-bold">Create your shopping list with <br><span class="text-blue-500 ">shopping List App</span></h1>
